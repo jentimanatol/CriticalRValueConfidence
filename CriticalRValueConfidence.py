@@ -89,6 +89,12 @@ def exit_app():
 # -------------------------- GUI START ----------------------------
 
 root = tk.Tk()
+
+
+root.iconbitmap("app_icon.ico")  # ico in logo in the tasck bar 
+
+
+
 root.title("Critical r-value Calculator and Visualizer AJ")
 root.geometry("1600x1000")
 root.protocol("WM_DELETE_WINDOW", exit_app)
