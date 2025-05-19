@@ -91,8 +91,28 @@ def exit_app():
 root = tk.Tk()
 
 
-root.iconbitmap("app_icon.ico")  # ico in logo in the tasck bar 
+# root.iconbitmap("app_icon.ico")  # ico in logo in the tasck bar 
 
+import os
+import sys
+import tkinter as tk
+
+root = tk.Tk()
+
+# Get the absolute path to the icon file when bundled by PyInstaller
+def resource_path(relative_path):
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+    return os.path.join(base_path, relative_path)
+
+icon_path = resource_path("app_icon.ico")
+try:
+    root.iconbitmap(icon_path)
+except tk.TclError:
+    print("Warning: Icon could not be set. Proceeding without it.")
 
 
 root.title("Critical r-value Calculator and Visualizer AJ")
