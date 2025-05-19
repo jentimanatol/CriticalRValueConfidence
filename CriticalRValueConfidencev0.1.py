@@ -4,17 +4,10 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib.pyplot as plt
 from scipy.stats import t
 import numpy as np
-import os
-import sys
 
-def resource_path(relative_path):
-    """Get absolute path to resource, works for dev and for PyInstaller"""
-    try:
-        # PyInstaller creates a temp folder and stores path in _MEIPASS
-        base_path = sys._MEIPASS
-    except Exception:
-        base_path = os.path.abspath(".")
-    return os.path.join(base_path, relative_path)
+
+
+
 
 def calculate_alpha_from_confidence(confidence):
     try:
@@ -101,29 +94,12 @@ def exit_app():
 
 root = tk.Tk()
 
-# Set window icon - correctly handling the path for both dev and built exe
-icon_path = resource_path("app_icon.ico")
 
-# Try to set the window icon - with error handling
-try:
-    root.iconbitmap(icon_path)
-except tk.TclError as e:
-    print(f"Warning: Could not set window icon: {e}")
+root.iconbitmap("app_icon.ico")  # Window icon
 
-# For Windows taskbar icon, we also need to use wm_iconbitmap
-try:
-    root.wm_iconbitmap(icon_path)
-except tk.TclError as e:
-    print(f"Warning: Could not set taskbar icon: {e}")
+root.wm_iconbitmap("app_icon.ico") # Taskbar icon
 
-# Alternative method for taskbar icon on Windows
-if os.name == 'nt':  # Windows systems
-    try:
-        import ctypes
-        myappid = 'ajcodev.criticalrvalue.confidence.1.0'  # arbitrary string
-        ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
-    except Exception as e:
-        print(f"Warning: Could not set taskbar icon using AppUserModelID: {e}")
+
 
 root.title("Critical r-value Calculator and Visualizer AJ")
 root.geometry("1700x1000")
