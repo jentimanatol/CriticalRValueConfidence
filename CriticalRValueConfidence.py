@@ -4,6 +4,19 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib.pyplot as plt
 from scipy.stats import t
 import numpy as np
+import os
+import sys
+
+# Add this helper function at the top of your file
+def resource_path(relative_path):
+    """Get absolute path to resource, works for dev and for PyInstaller"""
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+    
+    return os.path.join(base_path, relative_path)
 
 def calculate_alpha_from_confidence(confidence):
     try:
@@ -90,9 +103,14 @@ def exit_app():
 
 root = tk.Tk()
 
+# Replace these lines:
+# root.iconbitmap("app_icon.ico")  # ico in logo in the tasck bar 
+# root.iconbitmap(resource_path("app_icon.ico"))
 
-root.iconbitmap("app_icon.ico")  # ico in logo in the tasck bar 
-
+# With this:
+icon_path = resource_path("app_icon.ico")
+root.iconbitmap(icon_path)  # Window icon
+root.wm_iconbitmap(icon_path)  # Taskbar icon
 
 
 root.title("Critical r-value Calculator and Visualizer AJ")

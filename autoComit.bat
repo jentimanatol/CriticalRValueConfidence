@@ -1,9 +1,9 @@
 git --version
 git add .
-git commit -m "'UPDATE ICO IN TASCK BAR ico size max 250*250 '"
+git commit -m "'UPDATE worck flow file for GitHub Actions'"
 git push origin main
 
 :: === Tagging for GitHub Actions Release Build ===
-git tag v1.7
-git push origin v1.7
+git tag v1.9
+git push origin v1.9
 pause
