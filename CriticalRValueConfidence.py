@@ -91,50 +91,7 @@ def exit_app():
 root = tk.Tk()
 
 
-# root.iconbitmap("app_icon.ico")  # ico in logo in the tasck bar 
-
-import os
-import sys
-import tkinter as tk
-
-root = tk.Tk()
-
-
-import os
-import sys
-import tkinter as tk
-
-def resource_path(relative_path):
-    try:
-        # PyInstaller creates a temp folder and stores path in _MEIPASS
-        base_path = sys._MEIPASS
-    except Exception:
-        base_path = os.path.abspath(".")
-    return os.path.join(base_path, relative_path)
-
-icon_path = resource_path("app_icon.ico")
-
-if not os.path.isfile(icon_path):
-    print(f"Error: Icon file not found at path: {icon_path}")
-else:
-    try:
-        root.iconbitmap(icon_path)
-        print(f"Icon set successfully from: {icon_path}")
-    except tk.TclError as e:
-        print(f"Warning: Could not set icon bitmap. TclError: {e}")
-    except Exception as e:
-        print(f"Unexpected error setting icon bitmap: {e}")
-
-
-
-
-
-
-
-
-
-
-
+root.iconbitmap("app_icon.ico")  # ico in logo in the tasck bar 
 
 
 
