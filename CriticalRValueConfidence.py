@@ -99,7 +99,11 @@ import tkinter as tk
 
 root = tk.Tk()
 
-# Get the absolute path to the icon file when bundled by PyInstaller
+
+import os
+import sys
+import tkinter as tk
+
 def resource_path(relative_path):
     try:
         # PyInstaller creates a temp folder and stores path in _MEIPASS
@@ -109,10 +113,29 @@ def resource_path(relative_path):
     return os.path.join(base_path, relative_path)
 
 icon_path = resource_path("app_icon.ico")
-try:
-    root.iconbitmap(icon_path)
-except tk.TclError:
-    print("Warning: Icon could not be set. Proceeding without it.")
+
+if not os.path.isfile(icon_path):
+    print(f"Error: Icon file not found at path: {icon_path}")
+else:
+    try:
+        root.iconbitmap(icon_path)
+        print(f"Icon set successfully from: {icon_path}")
+    except tk.TclError as e:
+        print(f"Warning: Could not set icon bitmap. TclError: {e}")
+    except Exception as e:
+        print(f"Unexpected error setting icon bitmap: {e}")
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 root.title("Critical r-value Calculator and Visualizer AJ")
