@@ -6,6 +6,7 @@ from scipy.stats import t
 import numpy as np
 import os
 import sys
+import ctypes
 
 def resource_path(relative_path):
     """Get absolute path to resource, works for dev and for PyInstaller"""
@@ -99,31 +100,42 @@ def exit_app():
 
 # -------------------------- GUI START ----------------------------
 
-root = tk.Tk()
-
-# Set window icon - correctly handling the path for both dev and built exe
-icon_path = resource_path("app_icon.ico")
-
-# Try to set the window icon - with error handling
-try:
-    root.iconbitmap(icon_path)
-except tk.TclError as e:
-    print(f"Warning: Could not set window icon: {e}")
-
-# For Windows taskbar icon, we also need to use wm_iconbitmap
-try:
-    root.wm_iconbitmap(icon_path)
-except tk.TclError as e:
-    print(f"Warning: Could not set taskbar icon: {e}")
-
-# Alternative method for taskbar icon on Windows
+# Set Windows taskbar icon first - BEFORE creating Tk root
 if os.name == 'nt':  # Windows systems
     try:
-        import ctypes
         myappid = 'ajcodev.criticalrvalue.confidence.1.0'  # arbitrary string
         ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
     except Exception as e:
-        print(f"Warning: Could not set taskbar icon using AppUserModelID: {e}")
+        print(f"Warning: Could not set taskbar AppUserModelID: {e}")
+
+# Create root window
+root = tk.Tk()
+
+# Get the icon path
+icon_path = resource_path("app_icon.ico")
+
+# Apply the icon multiple ways for maximum compatibility
+try:
+    # For most windows (title bar)
+    root.iconbitmap(default=icon_path)
+    
+    # For Windows taskbar
+    root.iconbitmap(icon_path)
+    
+    # Another method for taskbar
+    root.wm_iconbitmap(icon_path)
+    
+    # For Windows taskbar in Windows 10/11
+    root.tk.call('wm', 'iconphoto', root._w, tk.PhotoImage(file=resource_path("app_icon.png") if os.path.exists(resource_path("app_icon.png")) else icon_path))
+except Exception as e:
+    print(f"Warning: Could not set icon: {e}")
+
+# Create a temporary PhotoImage to make sure it's loaded (helps with taskbar icon)
+try:
+    temp_icon = tk.PhotoImage(file=resource_path("app_icon.png") if os.path.exists(resource_path("app_icon.png")) else icon_path)
+    root.iconphoto(True, temp_icon)
+except Exception as e:
+    print(f"Warning: Could not set icon via PhotoImage: {e}")
 
 root.title("Critical r-value Calculator and Visualizer AJ")
 root.geometry("1700x1000")
