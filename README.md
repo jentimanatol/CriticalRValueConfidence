@@ -27,7 +27,7 @@ This project showcases my proficiency in **Python 3**, **Tkinter**, **matplotlib
 ## 🔽 Download
 
 📦 Grab the latest stable release:
-➡️ **[Download v4.1 for Windows (.exe)](https://github.com/jentimanatol/CriticalRValueConfidence/releases/download/v1.1/CriticalRValueConfidence.exe)**
+➡️ **[Download v2.1 for Windows (.exe)](https://github.com/jentimanatol/CriticalRValueConfidence/releases/download/v2.1/CriticalRValueConfidence.exe)**
 
 📁 Need older versions or want to check the source code?
 🔍 **[Browse all releases](https://github.com/jentimanatol/CriticalRValueConfidence/releases)**
